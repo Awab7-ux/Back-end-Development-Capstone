@@ -32,6 +32,15 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.github.dev',
 ]
 
+SONGS_API_URL = os.environ.get(
+    "SONGS_API_URL",
+    "https://raw.githubusercontent.com/captainfedoraskillup/private-get-songs/main/backend/data/songs.json",
+)
+PHOTOS_API_URL = os.environ.get(
+    "PHOTOS_API_URL",
+    "https://raw.githubusercontent.com/captainfedoraskillup/private-get-pictures/main/backend/data/pictures.json",
+)
+
 # Application definition
 
 INSTALLED_APPS = [

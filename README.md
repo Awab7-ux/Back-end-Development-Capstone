@@ -9,6 +9,7 @@ A Django concert-site project. The checked-in implementation uses Django templat
 - Django (listed without a version pin in `requirements.txt`)
 - SQLite (`db.sqlite3`, configured in `django_concert/settings.py`)
 - Django templates and static assets
+- Requests (HTTP client used by the Songs and Photos views)
 
 ## Project Structure
 
@@ -18,7 +19,7 @@ A Django concert-site project. The checked-in implementation uses Django templat
 - `templates/`: home, songs, photos, and other page templates
 - `static/`: site assets
 - `requirements.txt`: Python dependencies
-- `requirements.txt`: Python dependencies
+- `concert/migrations/`: generated Django migrations
 - `Dockerfile` and `deployment.yml`: incomplete templates containing placeholders
 
 ## Run Locally
@@ -35,15 +36,12 @@ Open `http://127.0.0.1:8000/` for the home page.
 
 ## Songs and Photos Status
 
-`concert/views.py` currently renders the home template in `index()`, but `songs()` and `photos()` contain only `pass`. They do not fetch or return data. The `requests` module is imported but not used, and there is no configured service URL or service-URL environment variable.
+The home page is at `/`. The Songs page is at `/songs/`; it fetches JSON with `requests.get(...).json()` and renders each song's title and lyrics from `songs.html`. Click a song title to open its lyrics modal. The Photos page is at `/photos/`; it fetches JSON and renders each `photo.pic_url`, event date, city, and state from `photos.html`.
 
-The templates are present: `songs.html` loops over a `songs` context value and includes a lyrics modal for each song; `photos.html` loops over a `photos` context value and displays each photo URL and event details. Since the views do not provide those values, the templates currently display no song titles or photos. Clicking a song title is the modal trigger in the template, but no title is currently rendered.
-
-The root URL configuration maps `/` to the home view first. The named Songs and Photos URL patterns in `concert/urls.py` also use an empty path, so they do not define separate `/songs` or `/photos` pages; reversing their names points to `/`. The URL patterns do not currently provide working Songs or Photos pages.
+By default, the Songs page reads `https://raw.githubusercontent.com/captainfedoraskillup/private-get-songs/main/backend/data/songs.json`, and the Photos page reads `https://raw.githubusercontent.com/captainfedoraskillup/private-get-pictures/main/backend/data/pictures.json`. Override these defaults with the `SONGS_API_URL` and `PHOTOS_API_URL` environment variables, respectively.
 
 ## Related Repositories
 
-- Songs: https://github.com/Awab7-ux/Back-End-Development-Songs
 - Songs: https://github.com/Awab7-ux/Back-end-Development-Songs
 - Pictures: https://github.com/Awab7-ux/Back-end-Development-Pictures
 

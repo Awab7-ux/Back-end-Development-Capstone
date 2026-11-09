@@ -5,10 +5,11 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
+from django.conf import settings
 
 from concert.forms import LoginForm, SignUpForm
 from concert.models import Concert, ConcertAttending
-import requests as req
+import requests
 
 
 # Create your views here.
@@ -22,15 +23,13 @@ def index(request):
 
 
 def songs(request):
-    # songs = {"songs":[]}
-    # return render(request, "songs.html", {"songs": [insert list here]})
-    pass
+    songs = requests.get(settings.SONGS_API_URL).json()
+    return render(request, "songs.html", {"songs": songs})
 
 
 def photos(request):
-    # photos = []
-    # return render(request, "photos.html", {"photos": photos})
-    pass
+    photos = requests.get(settings.PHOTOS_API_URL).json()
+    return render(request, "photos.html", {"photos": photos})
 
 def login_view(request):
     pass
