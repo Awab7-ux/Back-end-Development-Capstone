@@ -23,7 +23,7 @@ def index(request):
 
 
 def songs(request):
-    songs = requests.get(settings.SONGS_API_URL).json()
+    songs = requests.get(settings.SONGS_API_URL).json()["songs"]
     return render(request, "songs.html", {"songs": songs})
 
 
