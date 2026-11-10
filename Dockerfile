@@ -20,6 +20,7 @@ ENV APP=/app
 
 RUN chmod +x /app/entrypoint.sh
 
+RUN python manage.py collectstatic --noinput
 ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]
 
 # 7. insert code to set the run command to "python manage.py runserver 0.0.0.0:8000"

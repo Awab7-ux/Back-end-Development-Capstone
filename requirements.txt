@@ -31,3 +31,4 @@ coverage==6.3.2
 
 # Utilities
 httpie==3.2.1
+whitenoise==6.6.0
