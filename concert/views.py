@@ -72,3 +72,29 @@ def concert_attendee(request):
         return HttpResponseRedirect(reverse("concerts"))
     else:
         return HttpResponseRedirect(reverse("index"))
+
+
+def signup(request):
+    return HttpResponseRedirect("/admin/")
+
+
+def login_view(request):
+    return HttpResponseRedirect("/admin/login/?next=/concerts/")
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
+
+
+def concerts(request):
+    if request.user.is_authenticated:
+        lst = []
+        for item in Concert.objects.all():
+            try:
+                status = item.attendee.filter(user=request.user).first().attending
+            except Exception:
+                status = "-"
+            lst.append({"concert": item, "status": status})
+        return render(request, "concerts.html", {"concerts": lst})
+    return HttpResponseRedirect(reverse("login"))
